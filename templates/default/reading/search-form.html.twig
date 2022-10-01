@@ -1,0 +1,18 @@
+{% set searchAction = action is defined ? action : null %}
+{% set showMode = showMode is defined ? showMode : false %}
+{% set showReadingType = showReadingType is defined ? showReadingType : true %}
+
+<form action="{{ searchAction }}" method="get" class="form-inline">
+
+    {% if showMode %}
+        {% include 'default/_partials/_filter-mode.html.twig' %}
+    {% endif %}
+
+    {% include 'default/_partials/_filter-query.html.twig' %}
+
+    {% if showReadingType %}
+        {% include 'default/_partials/_filter-type.html.twig' with {'types': readingTypes } %}
+    {% endif %}
+
+    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+</form>

@@ -1,0 +1,49 @@
+{% extends 'layout.main.html.twig' %}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('category.list'), 'title': 'Categories', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <a href="{{ path('category.add') }}" class="btn btn-info mb-2">Add</a>
+    <div class="float-right mb-2 mr-2">
+        {% include 'default/_partials/search-form.html.twig' with {'action': path('category.list'), 'showMode': true }  %}
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for category in categories %}
+            <tr>
+                <th scope="row">{{ category.id }}</th>
+                <td>{{ category.name }}</td>
+                <td>
+                    <a href="{{ path('category.edit', {'id': category.id}) }}" class="btn btn-info">Edit</a>
+
+                    {% include 'default/_partials/button-delete-confirm.html.twig' with {
+                        'modalId': 'category-'~ category.id ~'-delete-confirm-modal',
+                        'deleteUrl': path('category.delete', {'id': category.id})
+                    } %}
+
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(categories) }}
+    </div>
+{% endblock %}
+

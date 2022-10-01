@@ -1,0 +1,88 @@
+version: '3.5'
+
+services:
+    nodejs:
+        build: ./.docker/nodejs
+        restart: unless-stopped
+        volumes_from:
+            - php-fpm
+        depends_on:
+            - php-fpm
+
+    php-fpm:
+        build: ./.docker/php-fpm
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/html:rw,cached
+            # Uncomment below on Windows or Mac to speed up synchronization a bit
+            # - /var/www/html/var/cache
+            # - /var/www/html/node_modules
+        networks:
+            - nastiksot_library_app
+            - shared-smtp
+
+    nginx:
+        build: ./.docker/nginx
+        restart: unless-stopped
+        volumes_from:
+            - php-fpm
+        networks:
+            - reverse-proxy
+            - nastiksot_library_app
+        expose:
+            - "80"
+        environment:
+            - VIRTUAL_PORT=80
+            - VIRTUAL_HOST=nastiksot-library.local
+            - HTTPS_METHOD=redirect
+            - SELF_SIGNED_HOST=nastiksot-library.local
+        depends_on:
+            - php-fpm
+
+    mysql:
+        build: ./.docker/mysql
+        restart: unless-stopped
+        environment:
+            - MYSQL_USER=nastiksot_library
+            - MYSQL_PASSWORD=123456
+            - MYSQL_DATABASE=nastiksot_library
+            - MYSQL_ROOT_PASSWORD=123456
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
+        volumes:
+            - ./.docker/mysql/data:/var/lib/mysql
+        networks:
+            - nastiksot_library_app
+#        ports:
+#            - "4009:3306"
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: unless-stopped
+        volumes:
+            - ./.docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+        networks:
+            - reverse-proxy
+            - nastiksot_library_app
+        expose:
+            - "80"
+        environment:
+            - VIRTUAL_PORT=80
+            - VIRTUAL_HOST=webmysql.nastiksot-library.local
+            - HTTPS_METHOD=redirect
+            - SELF_SIGNED_HOST=nastiksot-library.local
+
+    gdal:
+        image: osgeo/gdal
+        restart: "no"
+        volumes:
+            - ./tiles:/mnt/tiles
+        profiles:
+            - gdal
+
+networks:
+    reverse-proxy:
+        name: reverse-proxy
+    shared-smtp:
+        name: shared-smtp
+    nastiksot_library_app:
+        driver: bridge

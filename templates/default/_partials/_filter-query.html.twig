@@ -1,0 +1,7 @@
+{% set name = name is defined ? name : 'q' %}
+
+<input class="form-control mr-sm-2"
+       type="search" placeholder="Search" aria-label="Search"
+       name="{{ name }}"
+       value="{{ app.request.get(name) }}"
+>

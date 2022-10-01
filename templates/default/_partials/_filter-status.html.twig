@@ -1,0 +1,10 @@
+{% set name = name is defined ? name : 'status' %}
+{% set statuses = statuses is defined ? statuses : [] %}
+
+<select class="form-control mr-sm-2" name="{{ name }}">
+    <option value="">Status: All</option>
+    {% for key, status in statuses %}
+        {% set selected = app.request.get(name) == key ? 'selected' : null %}
+        <option value="{{ key }}" {{ selected }}>{{ status }}</option>
+    {% endfor %}
+</select>

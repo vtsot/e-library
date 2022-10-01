@@ -1,0 +1,10 @@
+{% set name = name is defined ? name : 'category' %}
+{% set categories = categories is defined ? categories : [] %}
+
+<select class="form-control mr-sm-2" name="{{ name }}">
+    <option value="">Category: All</option>
+    {% for key, type in categories %}
+        {% set selected = app.request.get(name) == key ? 'selected' : null %}
+        <option value="{{ key }}" {{ selected }}>{{ type }}</option>
+    {% endfor %}
+</select>

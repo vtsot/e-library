@@ -1,0 +1,7 @@
+{% set name = name is defined ? name : 'active' %}
+
+<select class="form-control mr-sm-2" name="{{ name }}">
+    <option value="">Is Active: All</option>
+    <option value="1" {{ app.request.get(name) == '1' ? 'selected' : null }}>Active</option>
+    <option value="0" {{ app.request.get(name) == '0' ? 'selected' : null }}>InActive</option>
+</select>

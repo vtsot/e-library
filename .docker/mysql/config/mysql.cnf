@@ -1,0 +1,3 @@
+[mysql]
+max_allowed_packet = 64M
+default-character-set = utf8mb4

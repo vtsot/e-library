@@ -1,0 +1,16 @@
+{% set name = name is defined ? name : 'mode' %}
+
+<select class="form-control mr-sm-2" name="{{ name }}">
+
+    {% set selected = app.request.get(name) == 'like' or app.request.get(name) is null ? 'selected' : null %}
+    <option value="like" {{ selected }}>Like</option>
+
+    {% set selected = app.request.get(name) == 'text-natural' ? 'selected' : null %}
+    <option value="text-natural" {{ selected }}>Full-Text: Natural Language</option>
+
+    {% set selected = app.request.get(name) == 'text-boolean' ? 'selected' : null %}
+    <option value="text-boolean" {{ selected }}>Full-Text: Boolean</option>
+
+    {% set selected = app.request.get(name) == 'query-expansion' ? 'selected' : null %}
+    <option value="query-expansion" {{ selected }}>Full-Text: With Query Expansion</option>
+</select>

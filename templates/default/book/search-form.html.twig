@@ -1,0 +1,24 @@
+{% set searchAction = action is defined ? action : null %}
+{% set showCategory = showCategory is defined ? showCategory : true %}
+
+<form action="{{ searchAction }}" method="get" class="form-inline">
+    <input class="form-control mr-sm-2"
+           type="search" placeholder="Search" aria-label="Search"
+           name="q"
+           value="{{ app.request.get('q') }}"
+    >
+
+    {% if showCategory %}
+        <select class="form-control mr-sm-2" name="category">
+            <option value="">Category: All</option>
+            {% for category, id in categoryChoices %}
+                <option value="{{ id }}"
+                    {{ app.request.get('category') == id ? 'selected' }}
+                >
+                    {{ category }}
+                </option>
+            {% endfor %}
+        </select>
+    {% endif %}
+    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+</form>

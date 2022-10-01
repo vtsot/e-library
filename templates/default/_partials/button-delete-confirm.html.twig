@@ -1,0 +1,29 @@
+{% set message = message is defined ? message : 'Confirm the delete action? <br />The entry will be deleted.' %}
+
+<a href="javascript:void(0);" class="btn btn-danger"
+   data-toggle="modal"
+   data-target="#{{ modalId }}">
+    Delete
+</a>
+<div class="modal fade" id="{{ modalId }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                    {{ message | raw }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-delete-confirmed" data-dismiss="modal" data-delete-url="{{ deleteUrl }}">Confirm</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
