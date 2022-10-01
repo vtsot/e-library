@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DTO;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MenuItem extends AbstractDto
+class MenuItem extends AbstractDTO
 {
 
     protected string $url;
@@ -28,7 +29,7 @@ class MenuItem extends AbstractDto
                 'title'   => $title,
                 'active'  => $active,
                 'open'    => $open,
-                'subMenu' => $subMenu
+                'subMenu' => $subMenu,
             ],
             $ignoreExtra
         );
@@ -57,6 +58,7 @@ class MenuItem extends AbstractDto
                         return false;
                     }
                 }
+
                 return true;
             }
         );

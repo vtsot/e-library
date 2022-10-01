@@ -33,9 +33,9 @@ services:
             - "80"
         environment:
             - VIRTUAL_PORT=80
-            - VIRTUAL_HOST=nastiksot-library.local
+            - VIRTUAL_HOST=library-cursach-myisam.local
             - HTTPS_METHOD=redirect
-            - SELF_SIGNED_HOST=nastiksot-library.local
+            - SELF_SIGNED_HOST=library-cursach-myisam.local
         depends_on:
             - php-fpm
 
@@ -67,9 +67,9 @@ services:
             - "80"
         environment:
             - VIRTUAL_PORT=80
-            - VIRTUAL_HOST=webmysql.nastiksot-library.local
+            - VIRTUAL_HOST=webmysql.library-cursach-myisam.local
             - HTTPS_METHOD=redirect
-            - SELF_SIGNED_HOST=nastiksot-library.local
+            - SELF_SIGNED_HOST=library-cursach-myisam.local
 
     gdal:
         image: osgeo/gdal
